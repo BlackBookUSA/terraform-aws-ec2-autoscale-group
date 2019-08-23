@@ -1,5 +1,5 @@
 module "label" {
-  source     = "git::https://github.com/blackbookusa/terraform-terraform-label.git?ref=tags/0.1.6"
+  source     = "git::https://github.com/blackbookusa/terraform-terraform-label.git?ref=tags/0.4.1"
   namespace  = var.namespace
   name       = var.name
   stage      = var.stage
@@ -145,8 +145,8 @@ data "null_data_source" "tags_as_list_of_maps" {
   count = var.enabled == "true" ? length(keys(var.tags)) : 0
 
   inputs = {
-    "key"                 = element(keys(var.tags), count.index)
-    "value"               = element(values(var.tags), count.index)
+    "key"                 = keys(var.tags)[count.index]
+    "value"               = values(var.tags)[count.index]
     "propagate_at_launch" = true
   }
 }
