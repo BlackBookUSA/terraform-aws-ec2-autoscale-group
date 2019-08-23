@@ -108,31 +108,31 @@ variable "ebs_optimized" {
 
 variable "block_device_mappings" {
   description = "Specify volumes to attach to the instance besides the volumes specified by the AMI"
-  type        = list(string)
+  type        = list(map(any))
   default     = []
 }
 
 variable "instance_market_options" {
   description = "The market (purchasing) option for the instances"
-  type        = list(string)
+  type        = list(map(any))
   default     = []
 }
 
 variable "placement" {
   description = "The placement specifications of the instances"
-  type        = list(string)
+  type        = list(map(any))
   default     = []
 }
 
 variable "credit_specification" {
   description = "Customize the credit specification of the instances"
-  type        = list(string)
+  type        = list(map(any))
   default     = []
 }
 
 variable "elastic_gpu_specifications" {
   description = "Specifications of Elastic GPU to attach to the instances"
-  type        = list(string)
+  type        = list(map(any))
   default     = []
 }
 

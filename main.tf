@@ -10,101 +10,102 @@ module "label" {
 }
 
 resource "aws_launch_template" "default" {
-  count = var.enabled == "true" ? 1 : 0
+  count = var.enabled ? 1 : 0
 
   name_prefix = format("%s%s", module.label.id, var.delimiter)
-  dynamic "block_device_mappings" {
-    for_each = [var.block_device_mappings]
-    content {
-      # TF-UPGRADE-TODO: The automatic upgrade tool can't predict
-      # which keys might be set in maps assigned here, so it has
-      # produced a comprehensive set here. Consider simplifying
-      # this after confirming which keys can be set in practice.
-
-      device_name  = lookup(block_device_mappings.value, "device_name", null)
-      no_device    = lookup(block_device_mappings.value, "no_device", null)
-      virtual_name = lookup(block_device_mappings.value, "virtual_name", null)
-
-      dynamic "ebs" {
-        for_each = lookup(block_device_mappings.value, "ebs", [])
-        content {
-          delete_on_termination = lookup(ebs.value, "delete_on_termination", null)
-          encrypted             = lookup(ebs.value, "encrypted", null)
-          iops                  = lookup(ebs.value, "iops", null)
-          kms_key_id            = lookup(ebs.value, "kms_key_id", null)
-          snapshot_id           = lookup(ebs.value, "snapshot_id", null)
-          volume_size           = lookup(ebs.value, "volume_size", null)
-          volume_type           = lookup(ebs.value, "volume_type", null)
-        }
-      }
-    }
-  }
-  dynamic "credit_specification" {
-    for_each = [var.credit_specification]
-    content {
-      # TF-UPGRADE-TODO: The automatic upgrade tool can't predict
-      # which keys might be set in maps assigned here, so it has
-      # produced a comprehensive set here. Consider simplifying
-      # this after confirming which keys can be set in practice.
-
-      cpu_credits = lookup(credit_specification.value, "cpu_credits", null)
-    }
-  }
+//  block_device_mappings {}
+//  dynamic "block_device_mappings" {
+//    for_each = [var.block_device_mappings]
+//    content {
+//      # TF-UPGRADE-TODO: The automatic upgrade tool can't predict
+//      # which keys might be set in maps assigned here, so it has
+//      # produced a comprehensive set here. Consider simplifying
+//      # this after confirming which keys can be set in practice.
+//
+//      device_name  = lookup(block_device_mappings.value, "device_name", null)
+//      no_device    = lookup(block_device_mappings.value, "no_device", null)
+//      virtual_name = lookup(block_device_mappings.value, "virtual_name", null)
+//
+//      dynamic "ebs" {
+//        for_each = lookup(block_device_mappings.value, "ebs", [])
+//        content {
+//          delete_on_termination = lookup(ebs.value, "delete_on_termination", null)
+//          encrypted             = lookup(ebs.value, "encrypted", null)
+//          iops                  = lookup(ebs.value, "iops", null)
+//          kms_key_id            = lookup(ebs.value, "kms_key_id", null)
+//          snapshot_id           = lookup(ebs.value, "snapshot_id", null)
+//          volume_size           = lookup(ebs.value, "volume_size", null)
+//          volume_type           = lookup(ebs.value, "volume_type", null)
+//        }
+//      }
+//    }
+//  }
+//  dynamic "credit_specification" {
+//    for_each = [var.credit_specification]
+//    content {
+//      # TF-UPGRADE-TODO: The automatic upgrade tool can't predict
+//      # which keys might be set in maps assigned here, so it has
+//      # produced a comprehensive set here. Consider simplifying
+//      # this after confirming which keys can be set in practice.
+//
+//      cpu_credits = lookup(credit_specification.value, "cpu_credits", null)
+//    }
+//  }
   disable_api_termination = var.disable_api_termination
   ebs_optimized           = var.ebs_optimized
-  dynamic "elastic_gpu_specifications" {
-    for_each = [var.elastic_gpu_specifications]
-    content {
-      # TF-UPGRADE-TODO: The automatic upgrade tool can't predict
-      # which keys might be set in maps assigned here, so it has
-      # produced a comprehensive set here. Consider simplifying
-      # this after confirming which keys can be set in practice.
-
-      type = elastic_gpu_specifications.value.type
-    }
-  }
+//  dynamic "elastic_gpu_specifications" {
+//    for_each = [var.elastic_gpu_specifications]
+//    content {
+//      # TF-UPGRADE-TODO: The automatic upgrade tool can't predict
+//      # which keys might be set in maps assigned here, so it has
+//      # produced a comprehensive set here. Consider simplifying
+//      # this after confirming which keys can be set in practice.
+//
+//      type = elastic_gpu_specifications.value.type
+//    }
+//  }
   image_id                             = var.image_id
   instance_initiated_shutdown_behavior = var.instance_initiated_shutdown_behavior
-  dynamic "instance_market_options" {
-    for_each = [var.instance_market_options]
-    content {
-      # TF-UPGRADE-TODO: The automatic upgrade tool can't predict
-      # which keys might be set in maps assigned here, so it has
-      # produced a comprehensive set here. Consider simplifying
-      # this after confirming which keys can be set in practice.
-
-      market_type = lookup(instance_market_options.value, "market_type", null)
-
-      dynamic "spot_options" {
-        for_each = lookup(instance_market_options.value, "spot_options", [])
-        content {
-          block_duration_minutes         = lookup(spot_options.value, "block_duration_minutes", null)
-          instance_interruption_behavior = lookup(spot_options.value, "instance_interruption_behavior", null)
-          max_price                      = lookup(spot_options.value, "max_price", null)
-          spot_instance_type             = lookup(spot_options.value, "spot_instance_type", null)
-          valid_until                    = lookup(spot_options.value, "valid_until", null)
-        }
-      }
-    }
-  }
+//  dynamic "instance_market_options" {
+//    for_each = [var.instance_market_options]
+//    content {
+//      # TF-UPGRADE-TODO: The automatic upgrade tool can't predict
+//      # which keys might be set in maps assigned here, so it has
+//      # produced a comprehensive set here. Consider simplifying
+//      # this after confirming which keys can be set in practice.
+//
+//      market_type = lookup(instance_market_options.value, "market_type", null)
+//
+//      dynamic "spot_options" {
+//        for_each = lookup(instance_market_options.value, "spot_options", [])
+//        content {
+//          block_duration_minutes         = lookup(spot_options.value, "block_duration_minutes", null)
+//          instance_interruption_behavior = lookup(spot_options.value, "instance_interruption_behavior", null)
+//          max_price                      = lookup(spot_options.value, "max_price", null)
+//          spot_instance_type             = lookup(spot_options.value, "spot_instance_type", null)
+//          valid_until                    = lookup(spot_options.value, "valid_until", null)
+//        }
+//      }
+//    }
+//  }
   instance_type = var.instance_type
   key_name      = var.key_name
-  dynamic "placement" {
-    for_each = [var.placement]
-    content {
-      # TF-UPGRADE-TODO: The automatic upgrade tool can't predict
-      # which keys might be set in maps assigned here, so it has
-      # produced a comprehensive set here. Consider simplifying
-      # this after confirming which keys can be set in practice.
-
-      affinity          = lookup(placement.value, "affinity", null)
-      availability_zone = lookup(placement.value, "availability_zone", null)
-      group_name        = lookup(placement.value, "group_name", null)
-      host_id           = lookup(placement.value, "host_id", null)
-      spread_domain     = lookup(placement.value, "spread_domain", null)
-      tenancy           = lookup(placement.value, "tenancy", null)
-    }
-  }
+//  dynamic "placement" {
+//    for_each = [var.placement]
+//    content {
+//      # TF-UPGRADE-TODO: The automatic upgrade tool can't predict
+//      # which keys might be set in maps assigned here, so it has
+//      # produced a comprehensive set here. Consider simplifying
+//      # this after confirming which keys can be set in practice.
+//
+//      affinity          = lookup(placement.value, "affinity", null)
+//      availability_zone = lookup(placement.value, "availability_zone", null)
+//      group_name        = lookup(placement.value, "group_name", null)
+//      host_id           = lookup(placement.value, "host_id", null)
+//      spread_domain     = lookup(placement.value, "spread_domain", null)
+//      tenancy           = lookup(placement.value, "tenancy", null)
+//    }
+//  }
   user_data = var.user_data_base64
 
   iam_instance_profile {
@@ -142,17 +143,17 @@ resource "aws_launch_template" "default" {
 }
 
 data "null_data_source" "tags_as_list_of_maps" {
-  count = var.enabled == "true" ? length(keys(var.tags)) : 0
+  count = var.enabled ? length(keys(var.tags)) : 0
 
   inputs = {
     "key"                 = keys(var.tags)[count.index]
     "value"               = values(var.tags)[count.index]
-    "propagate_at_launch" = true
+    "propagate_at_launch" = 1
   }
 }
 
 resource "aws_autoscaling_group" "default" {
-  count = var.enabled == "true" ? 1 : 0
+  count = var.enabled ? 1 : 0
 
   name_prefix               = format("%s%s", module.label.id, var.delimiter)
   vpc_zone_identifier       = var.subnet_ids

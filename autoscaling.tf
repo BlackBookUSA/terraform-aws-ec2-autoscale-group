@@ -1,7 +1,7 @@
 # https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/ec2-metricscollected.html
 
 locals {
-  autoscaling_enabled = var.enabled == "true" && var.autoscaling_policies_enabled == "true" ? true : false
+  autoscaling_enabled = var.enabled && var.autoscaling_policies_enabled == "true" ? true : false
 }
 
 resource "aws_autoscaling_policy" "scale_up" {
@@ -35,7 +35,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_high" {
   statistic           = var.cpu_utilization_high_statistic
   threshold           = var.cpu_utilization_high_threshold_percent
 
-  dimensions = {
+  dimensions {
     AutoScalingGroupName = join("", aws_autoscaling_group.default.*.name)
   }
 
@@ -54,7 +54,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_low" {
   statistic           = var.cpu_utilization_low_statistic
   threshold           = var.cpu_utilization_low_threshold_percent
 
-  dimensions = {
+  dimensions {
     AutoScalingGroupName = join("", aws_autoscaling_group.default.*.name)
   }
 
