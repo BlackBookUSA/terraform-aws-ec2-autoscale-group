@@ -14,7 +14,7 @@ resource "aws_launch_template" "default" {
 
   name_prefix = format("%s%s", module.label.id, var.delimiter)
   block_device_mappings {
-    device_name = "/dev/sda1"
+    device_name = var.os == "windows" ? "/dev/sda1" : "/dev/xvda"
 
     ebs {
       volume_size = var.ebs_volume_size
