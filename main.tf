@@ -1,3 +1,7 @@
+locals {
+  os = var.os == "windows" ? "/dev/sda1" : "/dev/xvda"
+}
+
 module "label" {
   source     = "git::https://github.com/blackbookusa/terraform-terraform-label.git?ref=tags/0.4.1"
   namespace  = var.namespace
@@ -14,7 +18,7 @@ resource "aws_launch_template" "default" {
 
   name_prefix = format("%s%s", module.label.id, var.delimiter)
   block_device_mappings {
-    device_name = var.os == "windows" ? "/dev/sda1" : "/dev/xvda"
+    device_name = local.os
 
     ebs {
       volume_size = var.ebs_volume_size
