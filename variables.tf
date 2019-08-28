@@ -363,3 +363,7 @@ variable "encrypt_ebs" {
   type        = "string"
   default     = "true"
 }
+ variable "os" {
+   type       = "string"
+   default    = "linux"
+ }
