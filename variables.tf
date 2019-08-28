@@ -354,3 +354,12 @@ variable "cpu_utilization_low_statistic" {
   description = "The statistic to apply to the alarm's associated metric. Either of the following is supported: `SampleCount`, `Average`, `Sum`, `Minimum`, `Maximum`"
 }
 
+variable "ebs_volume_size" {
+  type        = "string"
+  default     = 300
+}
+
+variable "encrypt_ebs" {
+  type        = "string"
+  default     = "true"
+}
