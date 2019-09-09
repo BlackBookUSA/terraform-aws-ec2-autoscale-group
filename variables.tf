@@ -355,15 +355,20 @@ variable "cpu_utilization_low_statistic" {
 }
 
 variable "ebs_volume_size" {
-  type        = "string"
-  default     = 300
+  type    = "string"
+  default = 300
 }
 
 variable "encrypt_ebs" {
-  type        = "string"
-  default     = "true"
+  type    = "string"
+  default = "true"
 }
- variable "os" {
-   type       = "string"
-   default    = "linux"
- }
+variable "os" {
+  type    = "string"
+  default = "linux"
+}
+
+variable "delete_on_termination" {
+  type    = string
+  default = "true"
+}
